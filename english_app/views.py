@@ -56,24 +56,36 @@ class WordDetailView(generics.RetrieveDestroyAPIView):
     serializer_class = WordSerializer
 
 
+def get_random_word():
+    """返回一个随机单词
+    目前也有可能不返回"""
+    count = 30
+    while count:
+        random_id = random.choice(WordModel.objects.values_list('pk', flat=True))
+        try:
+            word = WordModel.objects.get(pk=random_id)
+            # 在这里根据正确率稍微筛选一下
+            if word.translate_into_chinese_total != 0:
+                success_odds = word.translate_into_chinese_success / word.translate_into_chinese_total
+                if random.random() <= success_odds * 0.7:  # 0.7只是一个调节平衡的值
+                    count -= 1
+                    continue
+            return word.english
+        except WordModel.DoesNotExist:
+            print('单词在查询之前已被删除')
+            count -= 1
+
+
 class Random_word(APIView):
     def get(self, request):
-        count = 30
-        while count:
-            random_id = random.choice(WordModel.objects.values_list('pk', flat=True))
-            try:
-                word = WordModel.objects.get(pk=random_id)
-                # 在这里根据正确率稍微筛选一下
-                if word.translate_into_chinese_total != 0:
-                    success_odds = word.translate_into_chinese_success / word.translate_into_chinese_total
-                    if random.random() <= success_odds:
-                        count -= 1
-                        continue
-                return JsonResponse({'english': word.english})
-            except WordModel.DoesNotExist:
-                print('单词在查询之前已被删除')
-                count -= 1
-        return JsonResponse({'msg': '未找到合适的单词', 'english': 'python'}, status=400)
+        english_word = get_random_word()
+        if english_word:
+            return JsonResponse({'english': english_word})
+        else:
+            last_word = WordModel.objects.last()
+            if english_word:
+                return JsonResponse({'english': last_word.english})
+            return JsonResponse({'msg': '未找到合适的单词', 'english': 'python'}, status=400)
 
     def post(self, request):
         english = request.data.get('english')

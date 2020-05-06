@@ -2,41 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="adb86ee8-8f39-4c88-836d-a6a537a2a60b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/english_app/english_app_constant.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/english_app/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/css/bootstrap.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/axios.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/bootstrap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/english_app/add_word.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/english_app/all_words.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/english_app/choose_order.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/english_app/random_word.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/home/home.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/english_app/add_word.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/english_app/all_words.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/english_app/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/english_app/random_word.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/interview_app/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/tmp.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a41f3e98-b5b8-42e3-acf7-16b4e4e70ff7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a41f3e98-b5b8-42e3-acf7-16b4e4e70ff7.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LearningSystem/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/LearningSystem/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LearningSystem/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/LearningSystem/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/english_app/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/english_app/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/english_app/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/english_app/migrations/0002_auto_20200430_1747.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/english_app/migrations/0003_auto_20200430_2045.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/english_app/migrations/0004_auto_20200430_2253.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/english_app/migrations/0005_auto_20200430_2257.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/english_app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/english_app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/english_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/english_app/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/english_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/english_app/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interview_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/interview_app/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interview_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/interview_app/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/english_app/all_words.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/english_app/all_words.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,6 +151,7 @@
       <workItem from="1588488195643" duration="23532000" />
       <workItem from="1588566652932" duration="24634000" />
       <workItem from="1588659729484" duration="4331000" />
+      <workItem from="1588778869492" duration="2889000" />
     </task>
     <servers />
   </component>
