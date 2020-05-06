@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+    所有单词
+{% endblock %}
+
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <div id="choose_order" class="row clearfix">
+            <div class="col-md-2 column">
+            </div>
+            <div class="col-md-8 column">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            编号
+                        </th>
+                        <th>
+                            单词
+                        </th>
+                        <th>
+                            释义
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr v-for="data,n in data_results" :href="data.url">
+                        <td v-text="n+1"></td>
+                        <td v-text="data.english"></td>
+                        <td v-text="data.chinese_translation"></td>
+                    </tr>
+
+
+                    <tr class="success">
+
+                    </tr>
+                    <tr class="error">
+
+                    </tr>
+                    <tr class="warning">
+
+                    </tr>
+                    <tr class="info">
+
+                    </tr>
+                    </tbody>
+                </table>
+                <ul class="pagination">
+                    <li>
+                        <a href="#">Prev</a>
+                    </li>
+                    <li>
+                        <a href="#">1</a>
+                    </li>
+                    <li>
+                        <a href="#">2</a>
+                    </li>
+                    <li>
+                        <a href="#">3</a>
+                    </li>
+                    <li>
+                        <a href="#">4</a>
+                    </li>
+                    <li>
+                        <a href="#">5</a>
+                    </li>
+                    <li>
+                        <a href="#">Next</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-2 column">
+                <div class="btn-group">
+                    <button v-text="now_order" class="btn btn-default"></button>
+                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a @click="new_order">按最新</a>
+                        </li>
+                        <li>
+                            <a @click="word_abc_order">按字母顺序</a>
+                        </li>
+                        <li>
+                            <a @click="error_rate_order">按错误率</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block end_script %}
+    {{ block.super }}
+    <script src="{% static 'js/english_app/all_words.js' %}"></script>
+    <script src="{% static 'js/english_app/choose_order.js' %}"></script>
+{% endblock %}

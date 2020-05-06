@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    home
+{% endblock %}
+
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+
+{% block in_header %}
+    <div class="jumbotron">
+        <h2>
+            简易学习平台
+        </h2>
+        <p>
+            你可以在这里输入要记的单词，或者面试题目，然后通过随机题目，或者随机生成练习题库来进行学习，更多功能，正在完善当中
+        </p>
+        <p style="display: none">
+            <a class="btn btn-primary btn-large" href="#">Learn more</a>
+        </p>
+    </div>
+
+
+    <div class="row clearfix">
+        <div class="col-md-6 column">
+            <h2>
+                English word
+            </h2>
+            <p>
+                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
+                tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
+                malesuada magna mollis euismod. Donec sed odio dui.
+            </p>
+            <p>
+                <a class="btn" href="{% url 'english_app:index' %}">View details »</a>
+            </p>
+        </div>
+        <div class="col-md-6 column">
+            <h2>
+                Interview question
+            </h2>
+            <p>
+                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
+                tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
+                malesuada magna mollis euismod. Donec sed odio dui.
+            </p>
+            <p>
+                <a class="btn" href="{% url 'interview_app:index' %}">View details »</a>
+            </p>
+        </div>
+    </div>
+
+{% endblock %}
+

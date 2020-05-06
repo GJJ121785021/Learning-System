@@ -1,6 +1,6 @@
 from django.contrib import admin
-from english_app.models import WordModel
+from english_app.models import *
 
 
-admin.site.register(WordModel)
+admin.site.register([WordModel, ExaminationModel, QuestionModel])
 

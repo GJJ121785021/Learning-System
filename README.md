@@ -6,4 +6,4 @@
 - requests
 - scrapy
 - djangorestframework
-
+- django-filter
