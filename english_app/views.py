@@ -1,5 +1,6 @@
 import random
 
+from django.db.models import F
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
@@ -46,8 +47,12 @@ class WordListView(generics.ListCreateAPIView):
     search_fields = ['english', 'chinese_translation']
 
     def get_queryset(self):
-        if self.request.query_params.get('ordering') == 'error':
-            return super().get_queryset().filter(english__startswith='e')
+        if self.request.query_params.get('ordering') == 'error_odds':
+            queryset = super().get_queryset()
+            # 这里按错误率排序，总数是0的计算结果为None（不报错），按空值排序（好像是在最前面）
+            queryset = queryset.annotate(
+                error_odds=F('translate_into_chinese_success') / F('translate_into_chinese_total'))
+            return queryset.order_by('error_odds')
         return super().get_queryset()
 
 
@@ -76,8 +81,8 @@ def get_random_word():
             count -= 1
 
 
-class Random_word(APIView):
-    def get(self, request):
+class RandomWord(APIView):
+    def get(self, request, format=None):
         english_word = get_random_word()
         if english_word:
             return JsonResponse({'english': english_word})
@@ -87,7 +92,7 @@ class Random_word(APIView):
                 return JsonResponse({'english': last_word.english})
             return JsonResponse({'msg': '未找到合适的单词', 'english': 'python'}, status=400)
 
-    def post(self, request):
+    def post(self, request, format=None):
         english = request.data.get('english')
         into_chinese_translation = request.data.get('chinese_translation')
         if not (english and into_chinese_translation):
@@ -109,3 +114,36 @@ class Random_word(APIView):
             data['status'] = RESULT_FAULT
             data['msg'] = '上题答案错误'
             return JsonResponse(data)
+
+
+def get_random_exam(question_num=10):
+    # 得到随机的十个单词的列表
+    count = 30
+    words = []
+    while count:
+        word = get_random_word()
+        if word not in words:
+            words.append(word)
+            if len(words) == question_num:
+                return words
+        else:
+            count -= 1
+    return words
+
+
+class RandomExam(APIView):
+    def get(self, request, format=None):
+        if WordModel.objects.count() <= 10:
+            return Response({'words': WordModel.objects.all().values_list('english', flat=True)})
+        return Response({'words': get_random_exam()})
+
+    def post(self, request, format=None):
+        # into data -> {words:[], answers:[]}
+        words = request.data.get('words')
+        answers = request.data.get('answers')
+        if (not words) or (not answers) or (len(words) != len(answers)):
+            return Response({'status': RESULT_FAULT, 'msg': '错误提交'})
+        # 提交无误后的逻辑
+
+
+        return Response({'status': RESULT_RIGHT, 'msg': '提交成功'})

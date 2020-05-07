@@ -46,7 +46,7 @@ new Vue({
             if (this.now_order !== my_order) {
                 this.now_order = my_order;
                 // 请求数据
-                this.get_words('/english_app/words.json?ordering=error');
+                this.get_words('/english_app/words.json?ordering=error_odds');
             }
         },
 

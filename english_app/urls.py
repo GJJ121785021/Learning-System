@@ -6,7 +6,8 @@ app_name = 'english_app'
 
 
 api_conf_module = [
-    path('random_word/', views.Random_word.as_view(), name='random_word_api'),
+    path('random_word/', views.RandomWord.as_view(), name='random_word_api'),
+    path('random_exam/', views.RandomExam.as_view(), name='random_exam_api'),
 ]
 
 
@@ -20,7 +21,7 @@ urlpatterns = [
     path('words/<int:pk>/', views.WordDetailView.as_view(), name='wordmodel-detail'),
 
 
-    path('api/', include((api_conf_module, 'api'))),
+    path('api/', include(api_conf_module)),
 ]
 
 
