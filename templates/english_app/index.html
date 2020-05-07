@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+    单词板块
+{% endblock %}
+
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+
+
+{% block body %}
+    <div id="choose_order" class="col-md-6 column">
+        <div class="page-header">
+            <h1>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;英文单词 <small>QAQ</small>
+            </h1>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-1 column">
+            </div>
+            <div class="col-md-2 column">
+                <a href="{% url 'english_app:add_word' %}">
+                    <button type="button" class="btn btn-primary btn-default btn-block">添加单词</button>
+                </a>
+            </div>
+            <div class="col-md-1 column">
+            </div>
+            <div class="col-md-2 column">
+                <a href="{% url 'english_app:random_word' %}">
+                    <button type="button" class="btn btn-primary btn-default btn-block">随机单词</button>
+                </a>
+            </div>
+            <div class="col-md-1 column">
+            </div>
+            <div class="col-md-2 column">
+                <a href="{% url 'english_app:all_words' %}">
+                    <button type="button" class="btn btn-primary btn-default btn-block">全部单词</button>
+                </a>
+            </div>
+            <div class="col-md-3 column">
+            </div>
+
+        </div>
+        <br>
+        <br>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+            </div>
+        </div>
+        <div class="btn-group">
+            <button v-text="now_order" class="btn btn-default"></button>
+            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li @click="new_order">
+                    <a href="#">按最新</a>
+                </li>
+                <li @click="word_abc_order">
+                    <a href="#">按字母顺序</a>
+                </li>
+                {#                <li class="divider"></li> 这是分隔线#}
+                <li @click="error_rate_order">
+                    <a href="#">按错误率</a>
+                </li>
+            </ul>
+        </div>
+        <br>
+        <br>
+        <ul>
+            <li v-for="data in data_results">
+                <b :href="data.url" v-text="data.english"></b>
+                <p v-text="data.chinese_translation"></p>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-6 column">
+        <div class="page-header">
+            <h1>
+                单词测试卷 <small>TAT</small>
+            </h1>
+        </div>
+        <h2>
+            开始一份测试
+        </h2>
+        <p>
+            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
+            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
+            mollis euismod. Donec sed odio dui.
+        </p>
+        <p>
+            <a class="btn" href="#">View details »</a>
+        </p>
+        <h2>
+            查看历史试卷
+        </h2>
+        <p>
+            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
+            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
+            mollis euismod. Donec sed odio dui.
+        </p>
+        <p>
+            <a class="btn" href="#">View details »</a>
+        </p>
+    </div>
+{% endblock %}
+
+{% block end_script %}
+    {{ block.super }}
+    <script src="{% static 'js/english_app/choose_order.js' %}"></script>
+{% endblock %}
+
