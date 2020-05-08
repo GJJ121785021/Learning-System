@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+    添加面试题
+{% endblock %}
+
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <div class="row clearfix">
+            <br>
+            <br>
+            <br>
+            <label class="col-sm-2 control-label">题目</label>
+            <textarea v-model="in_word" type="text" class="form-control" placeholder="输入你要添加的题目" rows="3"></textarea>
+            <br>
+            <br>
+            <label class="col-sm-2 control-label">答案</label>
+            <textarea v-model="in_answer" class="form-control" placeholder="输入题目的答案" rows="6"></textarea>
+
+            <div class="col-md-4 column">
+            </div>
+            <div class="col-md-4 column">
+                <div id="add_word" class="form-horizontal">
+                    <div v-text="message" :style="message_style" class="form-group"></div>
+                    <div class="form-group"></div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button @click="add_once_again" class="btn btn-default btn-block btn-info">保存并继续添加</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4 column">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block end_script %}
+    {{ block.super }}
+    {#    <script src="{% static 'js/english_app/add_word.js' %}"></script>#}
+{% endblock %}
