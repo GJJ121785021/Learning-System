@@ -8,6 +8,7 @@
 
 {% block head %}
     {{ block.super }}
+    <script src="/vue.js"></script>
 {% endblock %}
 
 
@@ -16,7 +17,7 @@
         <div id="choose_order" class="row clearfix">
             <div class="col-md-2 column">
             </div>
-            <div class="col-md-8 column">
+            <div id="show_word" class="col-md-8 column">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -33,10 +34,10 @@
                     </thead>
                     <tbody>
 
-                    <tr v-for="data,n in data_results" :href="data.url">
+                    <tr v-for="(data_sub,n) in data.results" :href="data_sub.url" :class="get_class_for_show(n)">
                         <td v-text="n+1"></td>
-                        <td v-text="data.english"></td>
-                        <td v-text="data.chinese_translation"></td>
+                        <td v-text="data_sub.english"></td>
+                        <td v-text="data_sub.chinese_translation"></td>
                     </tr>
 
 
@@ -56,15 +57,13 @@
                 </table>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <li class="page-item disabled">
+                        <li :class="previous_button" @click="previous_page">
                             <a class="page-link" href="#" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
+                        <li class="page-item"><a class="page-link" v-text="now_page"></a></li>
+                        <li :class="next_button" @click="next_page">
                             <a class="page-link" href="#" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
