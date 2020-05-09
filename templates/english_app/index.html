@@ -70,9 +70,9 @@
         <br>
         <br>
         <ul>
-            <li v-for="data in data_results">
-                <b :href="data.url" v-text="data.english"></b>
-                <p v-text="data.chinese_translation"></p>
+            <li v-for="data2 in data.results">
+                <b :href="data2.url" v-text="data2.english"></b>
+                <p v-text="data2.chinese_translation"></p>
             </li>
         </ul>
     </div>
@@ -87,22 +87,19 @@
         </h2>
         <p>
             Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
-            mollis euismod. Donec sed odio dui.
+            mauris condimentum nibh
         </p>
         <p>
-            <a class="btn" href="#">View details »</a>
+            <a class="btn" href="{% url 'english_app:random_exam' %}">点击开始 »</a>
         </p>
         <h2>
             查看历史试卷
         </h2>
         <p>
-            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
-            mollis euismod. Donec sed odio dui.
+            你以前乱交的东西
         </p>
         <p>
-            <a class="btn" href="#">View details »</a>
+            <a class="btn" href="{% url 'english_app:history_exam' %}">点击查看 »</a>
         </p>
     </div>
 {% endblock %}

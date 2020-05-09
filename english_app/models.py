@@ -46,6 +46,7 @@ class WordModel(models.Model):
 
 
 class ExaminationModel(models.Model):
+    """试卷"""
     create_time = models.DateTimeField(auto_now_add=True, null=False, verbose_name='创建时间')
     total = models.PositiveSmallIntegerField(default=10, verbose_name='总题数')
     correct_num = models.PositiveSmallIntegerField(default=0, verbose_name='正确题数')
@@ -61,6 +62,7 @@ class ExaminationModel(models.Model):
 
 
 class QuestionModel(models.Model):
+    """试题"""
     examination = models.ForeignKey(ExaminationModel, on_delete=models.CASCADE, verbose_name='属于哪次测验')
     word = models.ForeignKey(WordModel, on_delete=models.CASCADE, verbose_name='是哪个单词')
     answer = models.CharField(max_length=50, default=None, verbose_name='输入的答案')

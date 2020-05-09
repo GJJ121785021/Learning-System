@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+    试题记录
+{% endblock %}
+
+{% block head %}
+    {{ block.super }}
+    <script src="/vue.js"></script>
+{% endblock %}
+
+
+
+{% block body %}
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-2 column">
+		</div>
+		<div class="col-md-8 column">
+			<p>
+				 <em>Git</em> 是一个分布式的版本控制系统，最初由 <strong>Linus Torvalds</strong> 编写，用作Linux内核代码的管理。在推出后，Git在其它项目中也取得了很大成功，尤其是在 <small>Ruby</small> 社区中。
+			</p>
+			<ul>
+				<li>
+					Lorem ipsum dolor sit amet
+				</li>
+
+			</ul>
+		</div>
+		<div class="col-md-2 column">
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block end_script %}
+    {{ block.super }}
+    <script src="{% static 'js/english_app/history_exam.js' %}"></script>
+{% endblock %}
+

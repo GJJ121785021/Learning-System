@@ -8,7 +8,6 @@
 
 {% block head %}
     {{ block.super }}
-    <script src="/vue.js"></script>
 {% endblock %}
 
 
@@ -34,9 +33,9 @@
                     </thead>
                     <tbody>
 
-                    <tr v-for="(data_sub,n) in data.results" :href="data_sub.url" :class="get_class_for_show(n)">
+                    <tr v-for="(data_sub,n) in data.results" :class="get_class_for_show(n)">
                         <td v-text="n+1"></td>
-                        <td v-text="data_sub.english"></td>
+                        <td><a v-text="data_sub.english" :href="data_sub.url"></a></td>
                         <td v-text="data_sub.chinese_translation"></td>
                     </tr>
 

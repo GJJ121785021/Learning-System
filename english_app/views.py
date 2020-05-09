@@ -1,18 +1,19 @@
 import random
 
+from django.db import transaction
 from django.db.models import F
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, QueryDict
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from english_app.english_app_constant import RESULT_RIGHT, RESULT_FAULT
-from english_app.models import WordModel
+from english_app.models import WordModel, ExaminationModel, QuestionModel
 from rest_framework import generics
 
 from rest_framework.filters import OrderingFilter, SearchFilter
-from english_app.serializers import WordSerializer
+from english_app.serializers import WordSerializer, ExaminationSerializer
 
 from django.core import serializers as django_serializers
 
@@ -35,6 +36,14 @@ def all_words(request):
 
 def add_word(request):
     return render(request, 'english_app/add_word.html')
+
+
+def random_exam(request):
+    return render(request, 'english_app/random_exam.html')
+
+
+def history_exam(request):
+    return render(request, 'english_app/history_exam.html')
 
 
 class WordListView(generics.ListCreateAPIView):
@@ -137,13 +146,59 @@ class RandomExam(APIView):
             return Response({'words': WordModel.objects.all().values_list('english', flat=True)})
         return Response({'words': get_random_exam()})
 
+    @transaction.atomic
     def post(self, request, format=None):
         # into data -> {words:[], answers:[]}
-        words = request.data.get('words')
-        answers = request.data.get('answers')
+        if type(request.data) == QueryDict:
+            words = request.data.getlist('words')
+            answers = request.data.getlist('answers')
+        else:  # if type(request.data) == dict:
+            words = request.data.get('words')
+            answers = request.data.get('answers')
         if (not words) or (not answers) or (len(words) != len(answers)):
             return Response({'status': RESULT_FAULT, 'msg': '错误提交'})
         # 提交无误后的逻辑
-
+        try:
+            # 使用Django事务
+            with transaction.atomic():
+                # 正确题数
+                correct_num = 0
+                # 创建一个试卷对象
+                exam = ExaminationModel.objects.create(total=len(words))
+                # 检查题目
+                for item in zip(words, answers):
+                    english, answer = item[0], item[1].strip()
+                    word = WordModel.all_objects.get(english=english)
+                    word.translate_into_chinese_total = word.translate_into_chinese_total + 1
+                    if answer and (answer in word.chinese_translation):
+                        correct_num += 1
+                        QuestionModel.objects.create(examination=exam, word=word, answer=answer, is_correct=True)
+                        word.translate_into_chinese_success = word.translate_into_chinese_success + 1
+                    else:
+                        QuestionModel.objects.create(examination=exam, word=word, answer=answer, is_correct=False)
+                    # 更新单词的翻译次数
+                    word.save(update_fields=['translate_into_chinese_total', 'translate_into_chinese_success'])
+                # 更新试题对象
+                exam.correct_num = correct_num
+                exam.finished = True
+                exam.save()
+        except WordModel.DoesNotExist:
+            return Response({'status': RESULT_FAULT, 'msg': '错误提交'})
 
         return Response({'status': RESULT_RIGHT, 'msg': '提交成功'})
+
+
+# 这里的创建逻辑，是在每次提交试题时，而不是发布试题时
+# 正规的是在发布时创建
+# 提交试题时创建，则直接根据提交的表单创建，
+# 发布时创建，可以把逻辑写在create中
+class ExaminationView(generics.ListAPIView):
+    queryset = ExaminationModel.objects.all()
+    serializer_class = ExaminationSerializer
+
+
+class ExaminationDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ExaminationModel.objects.all()
+    serializer_class = ExaminationSerializer
+
+

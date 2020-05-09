@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+    一份测试
+{% endblock %}
+
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <div id="random_exam" class="row clearfix">
+            <div class="col-md-2 column">
+            </div>
+            <div class="col-md-8 column">
+                <div class="row clearfix">
+                    <div v-for="(word,n) in words">
+                    <label v-text="word+':'" class="col-sm-2 control-label"></label><input v-model="answers[n]" class="form-control">
+                    </div>
+
+                    <br>
+                    <b v-text="message" :style="message_style"></b>
+                    <br>
+                    <div class="col-md-4 column">
+                    </div>
+                    <div class="col-md-4 column">
+                        <button @click="submit" type="button" class="btn btn-default btn-block btn-primary">提交</button>
+                    </div>
+                    <div class="col-md-4 column">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 column">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block end_script %}
+    {{ block.super }}
+    <script src="{% static 'js/english_app/random_exam.js' %}"></script>
+{% endblock %}
