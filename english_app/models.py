@@ -63,8 +63,8 @@ class ExaminationModel(models.Model):
 
 class QuestionModel(models.Model):
     """试题"""
-    examination = models.ForeignKey(ExaminationModel, on_delete=models.CASCADE, verbose_name='属于哪次测验')
-    word = models.ForeignKey(WordModel, on_delete=models.CASCADE, verbose_name='是哪个单词')
+    examination = models.ForeignKey(ExaminationModel, related_name='questions', on_delete=models.CASCADE, verbose_name='属于哪次测验')
+    word = models.ForeignKey(WordModel, related_name='questions', on_delete=models.CASCADE, verbose_name='是哪个单词')
     answer = models.CharField(max_length=50, default=None, verbose_name='输入的答案')
     is_correct = models.BooleanField('是否正确', default=False)
 

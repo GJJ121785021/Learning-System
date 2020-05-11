@@ -11,7 +11,6 @@ api_patterns = [
 ]
 
 
-
 urlpatterns = [
     path('', views.index, name='index'),
     path('add_question/', views.add_question, name='add_question'),

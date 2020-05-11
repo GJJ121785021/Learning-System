@@ -16,19 +16,20 @@
 {% block body %}
 
 <div class="container">
-	<div class="row clearfix">
+	<div id="history_exam" class="row clearfix">
 		<div class="col-md-2 column">
 		</div>
 		<div class="col-md-8 column">
-			<p>
-				 <em>Git</em> 是一个分布式的版本控制系统，最初由 <strong>Linus Torvalds</strong> 编写，用作Linux内核代码的管理。在推出后，Git在其它项目中也取得了很大成功，尤其是在 <small>Ruby</small> 社区中。
-			</p>
-			<ul>
-				<li>
-					Lorem ipsum dolor sit amet
-				</li>
+            <div v-for="data in datas.results">
+                总数<strong v-text="data.total"></strong> 正确率 <small v-text="data.correct_odds"></small>
+                <ul>
+                    <li v-for="question in data.questions">
+                        <b v-text="question.english"></b>
+                        <small v-text="question.answer"></small>
+                    </li>
+                </ul>
+            </div>
 
-			</ul>
 		</div>
 		<div class="col-md-2 column">
 		</div>
