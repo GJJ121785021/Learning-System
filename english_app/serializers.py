@@ -3,7 +3,15 @@ from rest_framework import serializers
 from english_app.models import WordModel, ExaminationModel, QuestionModel
 
 
+class WordNotJsonField(serializers.HyperlinkedIdentityField):
+    """把format改成None"""
+    def get_url(self, obj, view_name, request, format):
+        return super().get_url(obj, view_name, request, None)
+
+
 class WordSerializer(serializers.HyperlinkedModelSerializer):
+    url = WordNotJsonField(view_name='wordmodel-detail')
+
     class Meta:
         model = WordModel
         fields = ['url', 'english', 'chinese_translation']

@@ -77,8 +77,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'learningsystem',
-        'USER': 'root',
-        'PASSWORD': '123456',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '120.78.175.96',
+        'PORT': '3306',
     }
 }
 

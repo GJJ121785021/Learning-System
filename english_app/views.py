@@ -15,8 +15,6 @@ from rest_framework import generics
 from rest_framework.filters import OrderingFilter, SearchFilter
 from english_app.serializers import WordSerializer, ExaminationSerializer
 
-from django.core import serializers as django_serializers
-
 
 def home(request):
     return render(request, 'home.html', {'test_data': '传递参数成功'})
