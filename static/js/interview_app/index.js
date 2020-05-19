@@ -1,7 +1,7 @@
 new Vue({
     el: '#interview_index',
     data: {
-        data: null,
+        data: {results: null},
         now_page: 1,
         previous_button: 'page-item disabled',
         next_button: 'page-item',
@@ -16,7 +16,6 @@ new Vue({
             } else {
                 full_url = location.origin + url;
             }
-
             let that = this;
             axios
                 .get(full_url)
@@ -34,7 +33,6 @@ new Vue({
                     } else {
                         that.next_button = 'page-item disabled'
                     }
-
                 })
                 .catch(
                     function (error) {

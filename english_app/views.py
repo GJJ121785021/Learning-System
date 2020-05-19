@@ -16,34 +16,6 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 from english_app.serializers import WordSerializer, ExaminationSerializer
 
 
-def home(request):
-    return render(request, 'home.html', {'test_data': '传递参数成功'})
-
-
-def index(request):
-    return render(request, 'english_app/index.html')
-
-
-def random_word(request):
-    return render(request, 'english_app/random_word.html')
-
-
-def all_words(request):
-    return render(request, 'english_app/all_words.html')
-
-
-def add_word(request):
-    return render(request, 'english_app/add_word.html')
-
-
-def random_exam(request):
-    return render(request, 'english_app/random_exam.html')
-
-
-def history_exam(request):
-    return render(request, 'english_app/history_exam.html')
-
-
 class WordListView(generics.ListCreateAPIView):
     queryset = WordModel.objects.all()
     serializer_class = WordSerializer

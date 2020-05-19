@@ -13,12 +13,12 @@
 
 {% block body %}
     <div class="container">
-        <div class="row clearfix">
+        <div class="row clearfix" id="add_interview">
             <br>
             <br>
             <br>
             <label class="col-sm-2 control-label">题目</label>
-            <textarea v-model="in_word" type="text" class="form-control" placeholder="输入你要添加的题目" rows="3"></textarea>
+            <textarea v-model="in_question" type="text" class="form-control" placeholder="输入你要添加的题目" rows="3"></textarea>
             <br>
             <br>
             <label class="col-sm-2 control-label">答案</label>
@@ -48,5 +48,5 @@
 
 {% block end_script %}
     {{ block.super }}
-    {#    <script src="{% static 'js/english_app/add_word.js' %}"></script>#}
+        <script src="{% static 'js/interview_app/add_question.js' %}"></script>
 {% endblock %}

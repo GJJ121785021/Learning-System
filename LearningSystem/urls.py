@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 
-from english_app import views
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
@@ -24,7 +24,7 @@ urlpatterns = [
     # 这个只是用来加个登录的，渲染页面的还是要看 app
     # path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    path('', views.home, name='home'),
+    path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('english_app/', include('english_app.urls', namespace='english_app')),
     path('interview_app/', include('interview_app.urls', 'interview_app')),
 ]

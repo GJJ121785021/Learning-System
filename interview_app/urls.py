@@ -1,4 +1,5 @@
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 from interview_app import views
 
@@ -12,9 +13,9 @@ api_patterns = [
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('add_question/', views.add_question, name='add_question'),
-    path('delete_question/', views.delete_question, name='delete_question'),
+    path('', TemplateView.as_view(template_name='interview_app/index.html'), name='index'),
+    path('add_question/', TemplateView.as_view(template_name='interview_app/add_question.html'), name='add_question'),
+    path('delete_question/', TemplateView.as_view(template_name='interview_app/delete_question.html'), name='delete_question'),
 
 
     path('api/', include(api_patterns)),

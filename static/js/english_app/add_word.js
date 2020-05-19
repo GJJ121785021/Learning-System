@@ -56,7 +56,7 @@ new Vue({
             axios
                 .post(this.to_url(), {english: this.in_word, csrfmiddlewaretoken: this.get_csrf_token()})
                 .then(function () {
-                    that.message = that.word_success;
+                    that.message = that.in_word + '->' + that.word_success;
                     that.message_style = that.style_success;
                 })
                 .catch(

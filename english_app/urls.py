@@ -1,4 +1,5 @@
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 from english_app import views
 
@@ -14,12 +15,12 @@ api_conf_module = [
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('random_word/', views.random_word, name='random_word'),
-    path('all_words/', views.all_words, name='all_words'),
-    path('add_word/', views.add_word, name='add_word'),
-    path('random_exam/', views.random_exam, name='random_exam'),
-    path('history_exam/', views.history_exam, name='history_exam'),
+    path('', TemplateView.as_view(template_name='english_app/index.html'), name='index'),
+    path('random_word/', TemplateView.as_view(template_name='english_app/random_word.html'), name='random_word'),
+    path('all_words/', TemplateView.as_view(template_name='english_app/all_words.html'), name='all_words'),
+    path('add_word/', TemplateView.as_view(template_name='english_app/add_word.html'), name='add_word'),
+    path('random_exam/', TemplateView.as_view(template_name='english_app/random_exam.html'), name='random_exam'),
+    path('history_exam/', TemplateView.as_view(template_name='english_app/history_exam.html'), name='history_exam'),
 
 
     path('words/', views.WordListView.as_view(), name='wordmodel-list'),
