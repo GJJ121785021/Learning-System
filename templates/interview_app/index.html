@@ -36,7 +36,7 @@
 						 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-900319" :href="'#panel-element-'+n" v-text="result.question"></a>
 					</div>
 					<div :id="'panel-element-'+n" class="panel-collapse collapse">
-						<div v-text="result.answer" class="panel-body" style="background: #e7fffa">
+						<div v-html="result.answer.replace(/\n/g, '<br>')" class="panel-body" style="background: #e7fffa">
 						</div>
 					</div>
 				</div>

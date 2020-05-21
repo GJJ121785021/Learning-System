@@ -32,6 +32,7 @@ six==1.14.0
 sqlparse==0.3.1
 Twisted==20.3.0
 urllib3==1.25.9
+uWSGI==2.0.18
 w3lib==1.21.0
 wincertstore==0.2
 zope.interface==5.1.0

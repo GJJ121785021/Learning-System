@@ -13,7 +13,7 @@
 第一次垃圾尝试：
 我的几个命令：
 通过python:3.7构建容器：
-docker run --name djangoproject -p 8000:8000 -it -d python:3.7 bash(这个bash这里应该是cmd，但是cmd后面再写试试)
+docker run --name djangoproject -p 8000:8000 -it -d python:3.7 bash(这个bash这里应该是启动项目的cmd)
 复制项目：
 docker cp /myproject(/LearningSystem) c2b05d841a19:/workspace
 安装依赖：
@@ -31,8 +31,9 @@ nohup python manage.py runserver 0.0.0.0:8000
   重新运行Nginx:  nginx -s reload
   访问 Nginx的端口则可访问 -
 用gunicorn运行：
-gunicorn project.wsgi -b 0.0.0.0:8000 (-w 8 指定工作进程,你一核的还指定个锤子)
-运行是运行了，但是这个找不到静态资源，所以，这次简单的尝试先到这里
+gunicorn project.wsgi -b 0.0.0.0:8000 (-w 8 指定工作进程,你一核的还指定个锤子 
+--补充-还是指定为2吧，不然在ab测试时好像一个worker顶不住挂掉了后续的没跟上来导致请求超时测试失败)
+后续再处理静态资源
 
 第二次瞎操作：
 不就是找静态资源吗
@@ -60,9 +61,9 @@ server {
     location /vue.js {
         deny all;
     }
-    # 转发地址(正确操作应该是转发到docker外的宿主机的端口吧，但是我8太会)
+    # 转发地址(没使用docker的话host直接写127.0.0.1，我是在Linux上用了docker，连接到宿主机用的host一般是172.17.0.1（非Linux会有不同）)
     location / {
-        proxy_pass http://120.78.175.96:8000;
+        proxy_pass http://172.17.0.1:8000;
     }
    
     error_page   500 502 503 504  /50x.html;
@@ -70,7 +71,7 @@ server {
         root   /usr/share/nginx/html;
     }
 }
-配置完nginx -s reload一下应该就可以正常访问了
+配置完 nginx -s reload一下应该就可以正常访问了
 
 
 第三次一顿操作：
@@ -84,32 +85,12 @@ server {
        
     location / { 
         include  uwsgi_params;
-        uwsgi_pass  120.78.175.96:8000;
+        uwsgi_pass  172.17.0.1:8000;
     #    client_max_body_size 35m;
     }
     # 再重复一下上面①②的配置
 }
 重启一下nginx -s reload
-安装uwsgi ->  pip install uwsgi
-然后到Django项目下加上文件uwsgi.ini配置文件
-[uwsgi]
-socket = 0.0.0.0:8000 
-# 工作目录
-chdir = /workspace2  
-# wsgi.py 文件路径
-wsgi-file = LearningSystem/wsgi.py 
-processes = 1   
-threads = 2  
-enable-threads=true
-# 主进程
-master = true 
-pidfile = /var/run/uwsgi.pid 
-daemonize = /workspace2/uwsgi.log
-
-启动:uwsgi [--ini] uwsgi.ini
-重启:uwsgi --reload /var/run/uwsgi.pid  #因为我配置了他的pid的路径，所以可以这样用
-停止:uwsgi --stop /var/run/uwsgi.pid 
-
 
 
 额外说明：--- 配置负载均衡
@@ -124,7 +105,7 @@ upstream atom_server{
     # fair;
 }
 # weight 负载权重
-# down 当前server不参数负载均衡
+# down 当前server不参与负载均衡
 # backup 当其他机器全挂了或满负荷时使用此服务
 # ip_hash 按每个请求的hash结果分配
 # fair 按后台响应时间分(第三方)
@@ -141,7 +122,54 @@ location / {
 }
 
 
+安装uwsgi ->  pip install uwsgi
+然后到Django项目下加上文件uwsgi.ini配置文件
+[uwsgi]
+socket = 0.0.0.0:8000 
+# 工作目录（项目目录）
+chdir = /workspace2  
+# wsgi.py 文件路径
+wsgi-file = LearningSystem/wsgi.py 
+processes = 1   
+threads = 2  
+enable-threads=true
+# 主进程
+master = true 
+pidfile = /var/run/uwsgi.pid 
+# 启动项目后，前台打印日志
+# stats = 127.0.0.1:9191
+# 启动项目后退出前台，日志输出到指定文件
+# daemonize = /workspace2/uwsgi.log
+# 启动项目后不退出前台，日志输出到指定文件
+logto = /workspace2/uwsgi.log
+# uwsgi只记录启动日志, 不记录request logging
+# disable-logging = true
 
+启动:uwsgi [--ini] uwsgi.ini
+重启:uwsgi --reload /var/run/uwsgi.pid  #因为我配置了他的pid的路径，所以可以这样用
+停止:uwsgi --stop /var/run/uwsgi.pid 
+
+
+第四次收尾工作：
+摸索着一步步部署成功后，下面改用Dockerfile的方式将项目直接部署
+这里没有做Nginx和mysql的，因为个人感觉这两个第一次配置好了就得了，后续一般不会变动了
+将uwsgi.ini和Dockerfile文件放在项目根目录下
+↓↓Dockerfile↓↓
+FROM python:3.7
+COPY . /app
+# 选择工作文件夹
+WORKDIR /app
+# 安装包
+RUN pip install -r requirements.txt -i https://pypi.douban.com/simple/
+EXPOSE 8000
+CMD ["uwsgi", "/app/uwsgi.ini"]
+
+额外说明---uwsgi.ini不应该指定daemonize参数，否则启动项目后退出前台命令容器会认为自己没事情干了而自杀，你需要留一个前台在那一直挂着
+可以配置logto参数它会把日志输出到指定文件但不会退出前台，个人认为指定stats参数最好，这样是将日志交给docker容器保管……（可以查看，限定，生命周期相同）
+
+在项目根目录下执行 —>$ docker build -t imageName:Tag .
+生成镜像后执行 ->$ docker run --name containerName -p 8000:8000 -d imageName:Tag
+然后就可以看到容器在正常运行了
 
 ```
 
