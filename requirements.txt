@@ -7,7 +7,7 @@ chardet==3.0.4
 constantly==15.1.0
 cryptography==2.9.2
 cssselect==1.1.0
-Django==2.2.10
+Django==2.2
 django-filter==2.2.0
 djangorestframework==3.11.0
 hyperlink==19.0.0
@@ -21,6 +21,7 @@ pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.20
 PyDispatcher==2.0.5
+PyExecJS==1.5.1
 PyHamcrest==2.0.2
 pyOpenSSL==19.1.0
 pytz==2020.1
@@ -32,7 +33,6 @@ six==1.14.0
 sqlparse==0.3.1
 Twisted==20.3.0
 urllib3==1.25.9
-uWSGI==2.0.18
 w3lib==1.21.0
 wincertstore==0.2
 zope.interface==5.1.0

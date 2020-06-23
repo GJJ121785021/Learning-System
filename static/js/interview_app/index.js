@@ -43,15 +43,16 @@ new Vue({
         // 上一页
         previous_page: function () {
             if (this.data.previous) {
-                this.get_words(null, this.data.previous);
+                this.get_interview_questions(null, this.data.previous);
                 this.now_page--;
 
             }
         },
         // 下一页
         next_page: function () {
+            console.log('我被点了');
             if (this.data.next) {
-                this.get_words(null, this.data.next);
+                this.get_interview_questions(null, this.data.next);
                 this.now_page++;
             }
 
