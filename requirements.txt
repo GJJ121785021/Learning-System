@@ -7,7 +7,7 @@ chardet==3.0.4
 constantly==15.1.0
 cryptography==2.9.2
 cssselect==1.1.0
-Django==2.2
+Django==2.2.21
 django-filter==2.2.0
 djangorestframework==3.11.0
 hyperlink==19.0.0
